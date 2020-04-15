@@ -68,7 +68,7 @@ class Window(QWidget):
             self.editor.setCurrentFont(font)
             
 
-     
+    
     def ColorFunc(self):
         color = QColorDialog.getColor()
 
