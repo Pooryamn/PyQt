@@ -10,7 +10,7 @@ class Window(QWidget):
         
 
     def UI(self):
-        
+
         VBox = QVBoxLayout()
         HBox = QHBoxLayout()
 
@@ -22,12 +22,21 @@ class Window(QWidget):
         ClearBtn = QPushButton('Clear')
         ClearBtn.clicked.connect(self.Clearfunc)
 
+        FontBtn = QPushButton('Font...')
+        FontBtn.clicked.connect(self.FontFunc)
+
+        ColorBtn = QPushButton('Color...')
+        ColorBtn.clicked.connect(self.ColorFunc)
+
+
         VBox.addWidget(self.editor)
         VBox.addLayout(HBox)
 
         HBox.addStretch()
 
         HBox.addWidget(FileBtn)
+        HBox.addWidget(FontBtn)
+        HBox.addWidget(ColorBtn)
         HBox.addWidget(ClearBtn)
 
         HBox.addStretch()
@@ -40,14 +49,31 @@ class Window(QWidget):
         url = QFileDialog.getOpenFileName(self,'Open File','','All Files(*);;Text File(*.txt)')
         FilePath = url[0]
         
-        file = open(FilePath,'r')
+        if(FilePath != ''):
+            file = open(FilePath,'r')
 
-        Data = file.read()
+            Data = file.read()
 
-        self.editor.setText(Data)
+            self.editor.setText(Data)
+
+            file.close()
     
     def Clearfunc(self):
         self.editor.clear()
+
+    def FontFunc(self):
+        font,Ok = QFontDialog.getFont()
+
+        if (Ok):
+            self.editor.setCurrentFont(font)
+            
+
+     
+    def ColorFunc(self):
+        color = QColorDialog.getColor()
+
+        self.editor.setTextColor(color)
+
 
 
 def main():
