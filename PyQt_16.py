@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
 
 class Window(QMainWindow):
     def __init__(self):
@@ -34,6 +35,20 @@ class Window(QMainWindow):
         exit.triggered.connect(self.exitfunc)
         file.addAction(exit)
 
+
+        # Tool bar : 
+        TB = self.addToolBar('MyToolBar')
+        TB.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        ExitTB = QAction(QIcon('icons/exit.png'),'Exit',self)
+
+        ExitTB.triggered.connect(self.exitfunc)
+
+        TB.addAction(ExitTB)
+
+        OpenA = QAction(QIcon('icons/open.png'),'Open',self)
+        OpenA.triggered.connect(self.openfunc)
+        TB.addAction(OpenA)
+
         self.show()
 
     def exitfunc(self):
@@ -41,8 +56,11 @@ class Window(QMainWindow):
 
         if(mBox == QMessageBox.Yes):
             exit(0)
-        
 
+    def openfunc(self):
+        QMessageBox.information(self,'Open','Open toolbar clicked')    
+
+    
 def main():
     App = QApplication(sys.argv)
     W = Window()
